@@ -81,12 +81,12 @@ let useGuaranteedMemo1 = (f, dependency) => {
   let value = React.useRef(f());
   let previousDependency = React.useRef(dependency);
 
-  if (dependency !== previousDependency.current) {
-    value.current = f();
-    previousDependency.current = dependency;
+  if (dependency !== React.Ref.current(previousDependency)) {
+    React.Ref.setCurrent(value, f());
+    React.Ref.setCurrent(previousDependency, dependency);
   };
 
-  value.current;
+  React.Ref.current(value);
 };
 
 external identity: 'a => 'a = "%identity";
